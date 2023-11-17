@@ -4,6 +4,20 @@ import { ClotheList } from "../models/ClotheList.js";
 const clotheList = new ClotheList();
 
 export const getClothes = (req, res) => {
+    const { type } = req.query;
+
+    if (type) {
+        const clothes = clotheList.getClotheByType(type);
+
+        if (clothes.length) {
+            return res.status(200).send(clothes);
+        }
+
+        return res.status(404).send(
+            { "message": `Clothe with type(${type})  not found` }
+        )
+    }
+
     const clothes = clotheList.getAllClothes();
 
     if (!clothes) {
@@ -31,7 +45,7 @@ export const getClotheById = (req, res) => {
     )
 }
 
-export const getClotheByType = (req, res) => {
+/* export const getClotheByType = (req, res) => {
 
     const { type } = req.query;
 
@@ -45,11 +59,13 @@ export const getClotheByType = (req, res) => {
         { "message": `Clothe with type(${type})  not found` }
     )
 
-}
+} */
 
 export const postClothe = (req, res) => {
 
     const { name, price, image, color, size, stock, type } = req.body;
+
+    console.log(size);
 
     const errors = [];
 
@@ -60,19 +76,19 @@ export const postClothe = (req, res) => {
 
     if (!name) {
         errors.push("name");
-    } else if (!price) {
+    } if (!price) {
         errors.push("price");
-    } else if (!image) {
+    } if (!image) {
         errors.push("image");
-    } else if (!color) {
+    } if (!color) {
         errors.push("color");
-    } else if (!size) {
+    } if (!size) {
         errors.push("size");
-    } else if (!stock) {
+    } if (!stock) {
         errors.push("stock");
-    } else if (!type) {
+    } if (!type) {
         errors.push("type");
-    } else if (errors.length) {
+    } if (errors.length) {
         return res.status(400).send(
             { "message": `Missing ${errors.join(", ")} in request body` }
         )
@@ -80,21 +96,22 @@ export const postClothe = (req, res) => {
         return res.status(400).send(
             { "message": `Price must be a number` }
         )
-    } else if (typeof stock !== "number" && stock.parseInt(stock) > 15000) {
+    } else if (parseInt(stock) > 15000) {
         return res.status(400).send(
-            { "message": `Stock must be a number with maximum 15000 clothes` }
+            { "message": `Stock maximum is 15000 pices of clothe` }
         )
-    } else if (typeof size !== "string" && size !== "PP" || size !== "P" || size !== "M" || size !== "G" || size !== "GG" || size !== "XG") {
+    } else if (color.length > 20) {
         return res.status(400).send(
-            { "message": `Size must be a string with the correct sizes` }
+            { "message": `Color maximum characters is 20` }
         )
-    } else if (typeof color !== "string" && color.length > 20) {
+    } else if (size != "PP" && size !== "P" && size !== "M" && size !== "G" && size && "GG" && size !== "XG") {
         return res.status(400).send(
-            { "message": `Color must be a string` }
+            { "message": `Size must be PP, P, M , G , GG or XG` }
         )
-    } else if (typeof type !== "string" && type.length > 50) {
+    }
+    else if (type.length > 50) {
         return res.status(400).send(
-            { "message": `Type must be a string with maximum 50 characters ` }
+            { "message": `Type maximum 50 characters ` }
         )
     } else if (typeof name !== "string") {
         return res.status(400).send(

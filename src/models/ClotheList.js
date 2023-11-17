@@ -39,6 +39,6 @@ export class ClotheList {
         this.clothes = this.clothes.filter(clothe => clothe.id !== id)
     }
 
-   
+
 
 }
