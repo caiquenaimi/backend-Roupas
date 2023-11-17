@@ -10,7 +10,11 @@ export const getClothes = (req, res) => {
         const clothes = clotheList.getClotheByType(type);
 
         if (clothes.length) {
-            return res.status(200).send(clothes);
+            return res.status(200).send(
+                {
+                    "message": `Clothe with type:${type} (${clothes.length}) found `,
+                    clothes,
+                })
         }
 
         return res.status(404).send(
@@ -26,7 +30,11 @@ export const getClothes = (req, res) => {
         )
     }
 
-    return res.status(200).send(clothes);
+    return res.status(200).send(
+        {
+            "message" : `Clothes found (${clothes.length})`,
+            clothes,
+        })
 
 };
 
@@ -45,23 +53,8 @@ export const getClotheById = (req, res) => {
     )
 }
 
-/* export const getClotheByType = (req, res) => {
-
-    const { type } = req.query;
-
-    const clothes = clotheList.getClotheByType(type);
-
-    if (clothes.length) {
-        return res.status(200).send(clothes);
-    }
-
-    return res.status(404).send(
-        { "message": `Clothe with type(${type})  not found` }
-    )
-
-} */
-
 export const postClothe = (req, res) => {
+
 
     const { name, price, image, color, size, stock, type } = req.body;
 
