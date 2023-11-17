@@ -8,7 +8,7 @@ export const getClothes = (req, res) => {
     const { name } = req.query;
     const { size } = req.query;
     const { color } = req.query;
-    
+
 
     if (type && size) {
         const clothes = clotheList.getClotheByTypeAndSize(type, size);
@@ -245,9 +245,9 @@ export const putClothe = (req, res) => {
         return res.status(400).send(
             { "message": `Stock must be a number with maximum 15000 clothes` }
         )
-    } else if (typeof size !== "string" && size !== "PP" || size !== "P" || size !== "M" || size !== "G" || size !== "GG" || size !== "XG") {
+    } else if (size != "PP" && size !== "P" && size !== "M" && size !== "G" && size && "GG" && size !== "XG") {
         return res.status(400).send(
-            { "message": `Size must be a string with the correct sizes` }
+            { "message": `Size must be PP, P, M , G , GG or XG` }
         )
     } else if (typeof color !== "string" && color.length > 20) {
         return res.status(400).send(
