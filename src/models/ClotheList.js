@@ -15,6 +15,18 @@ export class ClotheList {
         return this.clothes.filter((clothe) => clothe.type === type);
     }
 
+    getClotheByName(name) {
+        return this.clothes.filter((clothe) => clothe.name === name);
+    }
+
+    getClotheBySize(size) {
+        return this.clothes.filter((clothe) => clothe.size === size);
+    }
+
+    getClotheByColor(color) {
+        return this.clothes.filter((clothe) => clothe.color === color);
+    }
+
     addClothe(clothe) {
         this.clothes.push(clothe);
     }
