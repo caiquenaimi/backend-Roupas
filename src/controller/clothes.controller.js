@@ -5,6 +5,57 @@ const clotheList = new ClotheList();
 
 export const getClothes = (req, res) => {
     const { type } = req.query;
+    const { name } = req.query;
+    const { size } = req.query;
+    const { color } = req.query;
+
+    if (color) {
+        const clothes = clotheList.getClotheByColor(color);
+
+        if (clothes.length) {
+            return res.status(200).send(
+                {
+                    "message": `Clothe with color:${color} (${clothes.length}) found `,
+                    clothes,
+                })
+        }
+
+        return res.status(404).send(
+            { "message": `Clothe with color(${color})  not found` }
+        )
+    }
+
+    if (name) {
+        const clothes = clotheList.getClotheByName(name);
+
+        if (clothes.length) {
+            return res.status(200).send(
+                {
+                    "message": `Clothe with name:${name} (${clothes.length}) found `,
+                    clothes,
+                })
+        }
+
+        return res.status(404).send(
+            { "message": `Clothe with name(${name})  not found` }
+        )
+    }
+
+    if (size) {
+        const clothes = clotheList.getClotheBySize(size);
+
+        if (clothes.length) {
+            return res.status(200).send(
+                {
+                    "message": `Clothe with size:${size} (${clothes.length}) found `,
+                    clothes,
+                })
+        }
+
+        return res.status(404).send(
+            { "message": `Clothe with size(${size})  not found` }
+        )
+    }
 
     if (type) {
         const clothes = clotheList.getClotheByType(type);
@@ -32,7 +83,7 @@ export const getClothes = (req, res) => {
 
     return res.status(200).send(
         {
-            "message" : `Clothes found (${clothes.length})`,
+            "message": `Clothes found (${clothes.length})`,
             clothes,
         })
 
@@ -56,7 +107,9 @@ export const getClotheById = (req, res) => {
 export const postClothe = (req, res) => {
 
 
-    const { name, price, image, color, size, stock, type } = req.body;
+    let { name, price, image, color, size, stock, type } = req.body;
+
+    size = size.toUpperCase();
 
     console.log(size);
 
