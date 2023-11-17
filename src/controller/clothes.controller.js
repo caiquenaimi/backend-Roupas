@@ -16,7 +16,7 @@ export const getClothes = (req, res) => {
         if (clothes.length) {
             return res.status(200).send(
                 {
-                    "message": `Clothe with type:${type} and size:${size} (${clothes.length}) found `,
+                    "total": clothes.length,
                     clothes,
                 })
         }
@@ -33,7 +33,7 @@ export const getClothes = (req, res) => {
         if (clothes.length) {
             return res.status(200).send(
                 {
-                    "message": `Clothe with color:${color} (${clothes.length}) found `,
+                    "total": clothes.length ,
                     clothes,
                 })
         }
@@ -49,7 +49,7 @@ export const getClothes = (req, res) => {
         if (clothes.length) {
             return res.status(200).send(
                 {
-                    "message": `Clothe with name:${name} (${clothes.length}) found `,
+                    "total": clothes.length,
                     clothes,
                 })
         }
@@ -65,7 +65,7 @@ export const getClothes = (req, res) => {
         if (clothes.length) {
             return res.status(200).send(
                 {
-                    "message": `Clothe with size:${size} (${clothes.length}) found `,
+                    "total": clothes.length,
                     clothes,
                 })
         }
@@ -81,7 +81,7 @@ export const getClothes = (req, res) => {
         if (clothes.length) {
             return res.status(200).send(
                 {
-                    "message": `Clothe with type:${type} (${clothes.length}) found `,
+                    "total": clothes.length ,
                     clothes,
                 })
         }
@@ -101,7 +101,7 @@ export const getClothes = (req, res) => {
 
     return res.status(200).send(
         {
-            "message": `Clothes found (${clothes.length})`,
+            "total": clothes.length,
             clothes,
         })
 
