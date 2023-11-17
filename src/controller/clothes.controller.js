@@ -8,6 +8,24 @@ export const getClothes = (req, res) => {
     const { name } = req.query;
     const { size } = req.query;
     const { color } = req.query;
+    
+
+    if (type && size) {
+        const clothes = clotheList.getClotheByTypeAndSize(type, size);
+
+        if (clothes.length) {
+            return res.status(200).send(
+                {
+                    "message": `Clothe with type:${type} and size:${size} (${clothes.length}) found `,
+                    clothes,
+                })
+        }
+
+        return res.status(404).send(
+            { "message": `Clothe with type:${type} and size:${size} not found` }
+        )
+
+    }
 
     if (color) {
         const clothes = clotheList.getClotheByColor(color);

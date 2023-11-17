@@ -27,6 +27,10 @@ export class ClotheList {
         return this.clothes.filter((clothe) => clothe.color === color);
     }
 
+    getClotheByTypeAndSize(type, size) {
+        return this.clothes.filter((clothe) => clothe.type === type && clothe.size === size);
+    }
+
     addClothe(clothe) {
         this.clothes.push(clothe);
     }
