@@ -33,7 +33,7 @@ export const getClothes = (req, res) => {
         if (clothes.length) {
             return res.status(200).send(
                 {
-                    "total": clothes.length ,
+                    "total": clothes.length,
                     clothes,
                 })
         }
@@ -81,7 +81,7 @@ export const getClothes = (req, res) => {
         if (clothes.length) {
             return res.status(200).send(
                 {
-                    "total": clothes.length ,
+                    "total": clothes.length,
                     clothes,
                 })
         }
@@ -204,14 +204,10 @@ export const postClothe = (req, res) => {
 }
 
 export const putClothe = (req, res) => {
-
     const { id } = req.params;
-
-    const { name, price, image, color, size, stock, type } = req.body;
-
+    let { name, price, image, color, size, stock, type } = req.body;
+    size = size.toUpperCase();
     const clothe = clotheList.getClotheById(id);
-
-
     const errors = [];
 
     const IsURLValid = (URL) => {
@@ -234,63 +230,30 @@ export const putClothe = (req, res) => {
     } else if (!type) {
         errors.push("type");
     } else if (errors.length) {
-        return res.status(400).send(
-            { "message": `Missing ${errors.join(", ")} in request body` }
-        )
+        return res.status(400).send({ "message": `Missing ${errors.join(", ")} in request body` });
     } else if (typeof price !== "number") {
-        return res.status(400).send(
-            { "message": `Price must be a number` }
-        )
-    } else if (typeof stock !== "number" && stock.parseInt(stock) > 15000) {
-        return res.status(400).send(
-            { "message": `Stock must be a number with maximum 15000 clothes` }
-        )
-    } else if (size != "PP" && size !== "P" && size !== "M" && size !== "G" && size && "GG" && size !== "XG") {
-        return res.status(400).send(
-            { "message": `Size must be PP, P, M , G , GG or XG` }
-        )
+        return res.status(400).send({ "message": `Price must be a number` });
+    } else if (typeof stock !== "number" && parseInt(stock) > 15000) {
+        return res.status(400).send({ "message": `Stock must be a number with maximum 15000 clothes` });
+    } else if (size !== "PP" && size !== "P" && size !== "M" && size !== "G" && size !== "GG" && size !== "XG") {
+        return res.status(400).send({ "message": `Size must be PP, P, M , G , GG or XG` });
     } else if (typeof color !== "string" && color.length > 20) {
-        return res.status(400).send(
-            { "message": `Color must be a string` }
-        )
+        return res.status(400).send({ "message": `Color must be a string` });
     } else if (typeof type !== "string" && type.length > 50) {
-        return res.status(400).send(
-            { "message": `Type must be a string with maximum 50 characters ` }
-        )
+        return res.status(400).send({ "message": `Type must be a string with maximum 50 characters` });
     } else if (typeof name !== "string") {
-        return res.status(400).send(
-            { "message": `Name must be a string` }
-        )
+        return res.status(400).send({ "message": `Name must be a string` });
     } else if (name.length < 6 || name.length > 40) {
-        return res.status(400).send(
-            { "message": `Name must be between 6 and 40 characters` }
-        )
+        return res.status(400).send({ "message": `Name must be between 6 and 40 characters` });
     } else if (IsURLValid(image) === false) {
-        return res.status(400).send(
-            { "message": `incorrect image URL ` }
-        )
+        return res.status(400).send({ "message": `Incorrect image URL` });
     } else if (!clothe) {
-        return res.status(404).send(
-            { "message": `Clothe with ID(${id})  not found` }
-        )
-    }
-    else {
-
+        return res.status(404).send({ "message": `Clothe with ID(${id}) not found` });
+    } else {
         const clotheUpdated = clotheList.updateClothe(id, name, price, image, color, size, stock, type);
-
-        return res.status(200).send(
-            {
-                "message": `${name} updated successfully`,
-                clotheUpdated,
-            })
-    };
-
-
-
-    return res.status(404).send(
-        { "message": `Clothe with ID(${id})  not found` }
-    )
-}
+        return res.status(200).send({ "message": `${name} updated successfully`, clotheUpdated });
+    }
+};
 
 export const deleteClothe = (req, res) => {
 
